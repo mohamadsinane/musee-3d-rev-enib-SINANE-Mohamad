@@ -29,13 +29,13 @@ function init(){
 
 
 function createLights(){
-	var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(5,5,5), scene) ; 
+	var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(10, 4, -10), scene);
 }
 
 function peuplerScene(){
 
 	// Création du sol
-	var sol = creerSol("sol",{},scene) ; 
+	//var sol = creerSol("sol",{},scene) ; 
 
 	createStrucureForMuseum();
 
@@ -43,7 +43,11 @@ function peuplerScene(){
 
 
 function createStrucureForMuseum()
-{
+{	
+	var sol = createWall(30,30)
+	sol.position = new BABYLON.Vector3(0, 0,-30)
+	
+
 	var sideBottomFloor_1 = createWall(30,6,2,4);
 	var sideBottomFloor_2 = createWall(30,6,0,0);
 	var sideBottomFloor_3 = createWall(30,6,0,0);
@@ -99,7 +103,7 @@ function createStrucureForMuseum()
 
 	var roofTopFloor = createWall(30,30,0,0);
 	roofTopFloor.position = new BABYLON.Vector3(0, 12,-30);
-
+	
 }
 
 init() ; 
