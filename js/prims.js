@@ -1,7 +1,7 @@
-
-
 function creerScene(){
 	var scn = new BABYLON.Scene(engine) ; 
+	scn.gravity = new BABYLON.Vector3(0,-9.8,0) ; 
+	scn.collisionsEnabled = true ;
 	return scn ;
 }
 
@@ -14,6 +14,9 @@ function creerCamera(name,options,scn){
 	camera = new BABYLON.UniversalCamera(name,new BABYLON.Vector3(10,1.7,5),scn) ;
 	camera.setTarget(new BABYLON.Vector3(0.0,0.7,0.0)) ; 
 
+	camera.checkCollisions = true ;
+	camera.ellipsoid = new BABYLON.Vector3(0.5,1.0,0.5) ;
+	camera.applyGravity = true ;
 	camera.keysUp = [90,38];
 	camera.keysDown = [40,83];
 	camera.keysLeft = [81,37];
@@ -31,26 +34,21 @@ function creerCamera(name,options,scn){
 
 
 function creerSol(name,options,scn){
-	let larg     = options.largeur || 300 ;   
-	let prof     = options.profondeur || larg ;   
-	let materiau = options.materiau || new BABYLON.StandardMaterial("blanc",scene) ;
-
-	let sol = BABYLON.Mesh.CreateGround(name,larg,prof,2.0,scn) ;
-
-	sol.material = materiau ;
-	// sol.material.diffuseColor  = new BABYLON.Color3(1.0,0,0) ;
-	sol.material.diffuseTexture = new BABYLON.Texture('./assets/textures/grass.png',scene);
-	sol.material.specularTexture = new BABYLON.Texture('./assets/textures/grass.png',scene);
-	sol.material.emissiveTexture = new BABYLON.Texture('./assets/textures/grass.png',scene);
-	sol.material.ambientTexture = new BABYLON.Texture('./assets/textures/grass.png',scene);
-	sol.material.diffuseTexture.uScale = 10.0;
-	sol.material.diffuseTexture.vScale = 10.0;
-	sol.material.specularTexture.uScale = 10.0;
-	sol.material.specularTexture.vScale = 10.0;
-	sol.material.emissiveTexture.uScale = 10.0;
-	sol.material.emissiveTexture.vScale = 10.0;
-	sol.material.ambientTexture.uScale = 10.0;
-	sol.material.ambientTexture.vScale = 10.0;
+	let sol = BABYLON.Mesh.CreateGround(name,100,100,2.0,scn) ;
+	sol.checkCollisions = true ;
+	sol.material = new BABYLON.StandardMaterial("blanc",scene) ;
+	sol.material.diffuseTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
+	sol.material.specularTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
+	sol.material.emissiveTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
+	sol.material.ambientTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
+	sol.material.diffuseTexture.uScale = 100.0;
+	sol.material.diffuseTexture.vScale = 100.0;
+	sol.material.specularTexture.uScale = 100.0;
+	sol.material.specularTexture.vScale = 100.0;
+	sol.material.emissiveTexture.uScale = 100.0;
+	sol.material.emissiveTexture.vScale = 100.0;
+	sol.material.ambientTexture.uScale = 100.0;
+	sol.material.ambientTexture.vScale = 100.0;
 	sol.receiveShadows = true;
 	sol.metadata = {"type": 'ground'}
 	return sol
@@ -104,7 +102,7 @@ function creerPoster(nom,opts,scn){
 	mat.diffuseTexture = new BABYLON.Texture(textureName, scn);
 	tableau1.material = mat;
 
-
+	tableau1.checkCollisions = true;
 
 	return group ; 
 
@@ -126,18 +124,37 @@ function creerCloison(nom,opts,scn){
 	cloison.parent = groupe ; 
 	cloison.position.y = hauteur / 2.0 ; 
 
-
+    cloison.checkCollisions = true ;
 
     return groupe ;  
 }
 
+function createWall(width, height, doorWidth, doorHeight){
+	//Polygon shape in XoZ plane
+	var shape = [ 
+		new BABYLON.Vector3(0, 0, height), 
+		new BABYLON.Vector3(0, 0, 0),
+		new BABYLON.Vector3(width, 0, 0), 
+		new BABYLON.Vector3(width, 0, height), 
+		];
+	//Holes in XoZ plane
+	var holes = [];
+	holes[0] = [ 
+		new BABYLON.Vector3(width/2-doorWidth/2, 0, doorHeight),
+		new BABYLON.Vector3(width/2-doorWidth/2, 0, 0),
+		new BABYLON.Vector3(width/2+doorWidth/2, 0, 0),
+		new BABYLON.Vector3(width/2+doorWidth/2, 0, doorHeight),
+		
+	];
+	var polygon = BABYLON.MeshBuilder.ExtrudePolygon("polygon", {shape:shape, holes:holes, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+    polygon.checkCollisions = true ;
+	return polygon
+}
 
-
-
-
-
-
-
+function placeAndRotateObject(object, posx, posy , posz, rotx , roty, rotz){
+	object.position = new BABYLON.Vector3(posx,posy,posz);
+	object.rotation = new BABYLON.Vector3(rotx,roty,rotz);
+}
 
 function set_FPS_mode(scene, canvas, camera){
 
