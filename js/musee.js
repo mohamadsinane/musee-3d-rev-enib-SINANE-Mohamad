@@ -1,6 +1,6 @@
 var canvas, engine ;
 var scene, camera ;
-
+var light;
 function init(){
 	canvas = document.getElementById("renderCanvas") ; 
 	engine = new BABYLON.Engine(canvas,true) ; 
@@ -29,7 +29,7 @@ function init(){
 
 
 function createLights(){
-	var light = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(10, 4, -10), scene);
+	ligh = new BABYLON.PointLight("pointLight", new BABYLON.Vector3(10, 4, -10));
 }
 
 function peuplerScene(){
@@ -44,9 +44,23 @@ function peuplerScene(){
 
 function createStrucureForMuseum()
 {	
-	var sol = createWall(30,30)
+	var sol = createWall(30,30,0,0)
 	sol.position = new BABYLON.Vector3(0, 0,-30)
-	
+	sol.material = new BABYLON.StandardMaterial("blanc",scene) ;
+	sol.material.diffuseTexture = new BABYLON.Texture('./assets/textures/solTexture.jpg',scene);
+	sol.material.specularTexture = new BABYLON.Texture('./assets/textures/solTexture.jpg',scene);
+	sol.material.emissiveTexture = new BABYLON.Texture('./assets/textures/solTexture.jpg',scene);
+	sol.material.ambientTexture = new BABYLON.Texture('./assets/textures/solTexture.jpg',scene);
+	sol.material.diffuseTexture.uScale = 30.0;
+	sol.material.diffuseTexture.vScale = 30.0;
+	sol.material.specularTexture.uScale = 30.0;
+	sol.material.specularTexture.vScale = 30.0;
+	sol.material.emissiveTexture.uScale = 30.0;
+	sol.material.emissiveTexture.vScale = 30.0;
+	sol.material.ambientTexture.uScale = 30.0;
+	sol.material.ambientTexture.vScale = 30.0;
+	sol.receiveShadows = true;
+	sol.metadata = {"type": 'ground'}
 
 	var sideBottomFloor_1 = createWall(30,6,2,4);
 	var sideBottomFloor_2 = createWall(30,6,0,0);
@@ -103,7 +117,6 @@ function createStrucureForMuseum()
 
 	var roofTopFloor = createWall(30,30,0,0);
 	roofTopFloor.position = new BABYLON.Vector3(0, 12,-30);
-	
 }
 
 init() ; 

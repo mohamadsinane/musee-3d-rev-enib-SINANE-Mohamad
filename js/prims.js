@@ -32,28 +32,6 @@ function creerCamera(name,options,scn){
 }
 
 
-
-function creerSol(name,options,scn){
-	let sol = BABYLON.Mesh.CreateGround(name,100,100,2.0,scn) ;
-	sol.checkCollisions = true ;
-	sol.material = new BABYLON.StandardMaterial("blanc",scene) ;
-	sol.material.diffuseTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
-	sol.material.specularTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
-	sol.material.emissiveTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
-	sol.material.ambientTexture = new BABYLON.Texture('./assets/textures/solCarrelage.jpg',scene);
-	sol.material.diffuseTexture.uScale = 100.0;
-	sol.material.diffuseTexture.vScale = 100.0;
-	sol.material.specularTexture.uScale = 100.0;
-	sol.material.specularTexture.vScale = 100.0;
-	sol.material.emissiveTexture.uScale = 100.0;
-	sol.material.emissiveTexture.vScale = 100.0;
-	sol.material.ambientTexture.uScale = 100.0;
-	sol.material.ambientTexture.vScale = 100.0;
-	sol.receiveShadows = true;
-	sol.metadata = {"type": 'ground'}
-	return sol
-}
-
 function creerMateriauSimple(nom,options,scn){
 	let couleur = options.couleur || null ; 
 	let texture = options.texture || null ; 
@@ -146,8 +124,16 @@ function createWall(width, height, doorWidth, doorHeight){
 		new BABYLON.Vector3(width/2+doorWidth/2, 0, doorHeight),
 		
 	];
+
+	var wallMaterial = new BABYLON.StandardMaterial("wallMaterial", scene);
+	wallMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/murTexture.jpg", scene);
+	wallMaterial.diffuseTexture.uScale = 5.0;
+	wallMaterial.diffuseTexture.vScale = 5.0;
+
 	var polygon = BABYLON.MeshBuilder.ExtrudePolygon("polygon", {shape:shape, holes:holes, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-    polygon.checkCollisions = true ;
+	polygon.checkCollisions = true ;
+	polygon.material=wallMaterial;
+	
 	return polygon
 }
 
