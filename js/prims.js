@@ -1,80 +1,80 @@
-function creerScene(){
-	var scn = new BABYLON.Scene(engine) ; 
-	scn.gravity = new BABYLON.Vector3(0,-9.8,0) ; 
-	scn.collisionsEnabled = true ;
-	return scn ;
+function creerScene() {
+	var scn = new BABYLON.Scene(engine);
+	scn.gravity = new BABYLON.Vector3(0, -9.8, 0);
+	scn.collisionsEnabled = true;
+	return scn;
 }
 
 
-function creerCamera(name,options,scn){
+function creerCamera(name, options, scn) {
 	// console.log("creation camera");
 	// Création de la caméra
 	// =====================
 
-	camera = new BABYLON.UniversalCamera(name,new BABYLON.Vector3(10,1.7,-10),scn) ;
-	camera.setTarget(new BABYLON.Vector3(0.0,0.7,0.0)) ; 
+	camera = new BABYLON.UniversalCamera(name, new BABYLON.Vector3(10, 1.7, -10), scn);
+	camera.setTarget(new BABYLON.Vector3(0.0, 0.7, 0.0));
 
-	camera.checkCollisions = true ;
-	camera.ellipsoid = new BABYLON.Vector3(0.5,1.0,0.5) ;
-	camera.applyGravity = true ;
-	camera.keysUp = [90,38];
-	camera.keysDown = [40,83];
-	camera.keysLeft = [81,37];
-	camera.keysRight = [68,39];
-	camera.attachControl(canvas) ;
+	camera.checkCollisions = true;
+	camera.ellipsoid = new BABYLON.Vector3(0.5, 1.0, 0.5);
+	camera.applyGravity = true;
+	camera.keysUp = [90, 38];
+	camera.keysDown = [40, 83];
+	camera.keysLeft = [81, 37];
+	camera.keysRight = [68, 39];
+	camera.attachControl(canvas);
 	camera.inertia = 0.01;
-	camera.angularSensibility  = 1000;
+	camera.angularSensibility = 1000;
 
-	camera.attachControl(canvas, false) ; 
+	camera.attachControl(canvas, false);
 
 
 	return camera
 }
 
 
-function creerMateriauSimple(nom,options,scn){
-	let couleur = options.couleur || null ; 
-	let texture = options.texture || null ; 
-	let uScale  = options.uScale  || 1.0 ; 
-	let vScale  = options.vScale  || 1.0 ; 
+function creerMateriauSimple(nom, options, scn) {
+	let couleur = options.couleur || null;
+	let texture = options.texture || null;
+	let uScale = options.uScale || 1.0;
+	let vScale = options.vScale || 1.0;
 
-	let materiau = new BABYLON.StandardMaterial(nom,scn) ; 
-	if(couleur != null) materiau.diffuseColor = couleur ; 
-	if(texture!= null){
-		materiau.diffuseTexture = new BABYLON.Texture(texture,scn) ; 
-		materiau.diffuseTexture.uScale = uScale ; 
-		materiau.diffuseTexture.vScale = vScale ; 
+	let materiau = new BABYLON.StandardMaterial(nom, scn);
+	if (couleur != null) materiau.diffuseColor = couleur;
+	if (texture != null) {
+		materiau.diffuseTexture = new BABYLON.Texture(texture, scn);
+		materiau.diffuseTexture.uScale = uScale;
+		materiau.diffuseTexture.vScale = vScale;
 	}
-	return materiau ; 
+	return materiau;
 }
 
 
-function creerSphere(nom,opts,scn){
+function creerSphere(nom, opts, scn) {
 
-	let options  = opts || {} ; 
-	let diametre = options.diametre || 1.0 ; 
+	let options = opts || {};
+	let diametre = options.diametre || 1.0;
 
-	let sph = BABYLON.Mesh.CreateSphere(nom,diametre,1,scn) ;
-	sph.material              = new BABYLON.StandardMaterial("blanc",scene) ;
-	sph.material.diffuseColor  = new BABYLON.Color3(1.0,1.0,1.0) ;
+	let sph = BABYLON.Mesh.CreateSphere(nom, diametre, 1, scn);
+	sph.material = new BABYLON.StandardMaterial("blanc", scene);
+	sph.material.diffuseColor = new BABYLON.Color3(1.0, 1.0, 1.0);
 
 
-	sph.metadata = {"type": 'sphere'}
+	sph.metadata = { "type": 'sphere' }
 	return sph;
 
 }
 
-function creerPoster(nom,opts,scn){
+function creerPoster(nom, opts, scn) {
 
-	let options = opts || {} ; 
-	let hauteur = options["hauteur"] || 1.0 ; 
-	let largeur = options["largeur"] || 1.0 ; 	
-	let textureName = options["tableau"] || ""; 
+	let options = opts || {};
+	let hauteur = options["hauteur"] || 1.0;
+	let largeur = options["largeur"] || 1.0;
+	let textureName = options["tableau"] || "";
 
-	var group = new BABYLON.TransformNode("group-"+nom)
-	var tableau1 = BABYLON.MeshBuilder.CreatePlane("tableau-" + nom, {width:largeur,height:hauteur}, scn);
-	tableau1.parent = group ; 
-	tableau1.position.y = hauteur/2.0 ; 
+	var group = new BABYLON.TransformNode("group-" + nom)
+	var tableau1 = BABYLON.MeshBuilder.CreatePlane("tableau-" + nom, { width: largeur, height: hauteur }, scn);
+	tableau1.parent = group;
+	tableau1.position.y = hauteur / 2.0;
 
 	var mat = new BABYLON.StandardMaterial("tex-tableau-" + nom, scn);
 	mat.diffuseTexture = new BABYLON.Texture(textureName, scn);
@@ -82,47 +82,149 @@ function creerPoster(nom,opts,scn){
 
 	tableau1.checkCollisions = true;
 
-	return group ; 
+	return group;
 
 }
 
-function creerCloison(nom,opts,scn){
-	
-	let options   = opts || {} ; 
-	let hauteur   = options.hauteur || 3.0 ; 
-	let largeur   = options.largeur || 5.0 ; 
-	let epaisseur = options.epaisseur || 0.1 ;
+function creerCloison(nom, opts, scn) {
 
-	let materiau   = options.materiau || new BABYLON.StandardMaterial("materiau-pos"+nom,scn); 
+	let options = opts || {};
+	let hauteur = options.hauteur || 3.0;
+	let largeur = options.largeur || 5.0;
+	let epaisseur = options.epaisseur || 0.1;
 
-    	let groupe = new BABYLON.TransformNode("groupe-"+nom) ; 
+	let materiau = options.materiau || new BABYLON.StandardMaterial("materiau-pos" + nom, scn);
 
-	let cloison = BABYLON.MeshBuilder.CreateBox(nom,{width:largeur,height:hauteur,depth:epaisseur},scn) ;
-	cloison.material = materiau ; 
-	cloison.parent = groupe ; 
-	cloison.position.y = hauteur / 2.0 ; 
+	let groupe = new BABYLON.TransformNode("groupe-" + nom);
 
-    cloison.checkCollisions = true ;
+	let cloison = BABYLON.MeshBuilder.CreateBox(nom, { width: largeur, height: hauteur, depth: epaisseur }, scn);
+	cloison.material = materiau;
+	cloison.parent = groupe;
+	cloison.position.y = hauteur / 2.0;
 
-    return groupe ;  
+	cloison.checkCollisions = true;
+
+	return groupe;
 }
 
-function createWall(width, height, doorWidth, doorHeight){
-	//Polygon shape in XoZ plane
-	var shape = [ 
-		new BABYLON.Vector3(0, 0, height), 
+function createElevatorShaft() {
+	var height = 12;
+	var width = 4;
+	var doorWidth = 2.2;
+	var doorHeight = 3.3
+	var shape = [
+		new BABYLON.Vector3(0, 0, height),
 		new BABYLON.Vector3(0, 0, 0),
-		new BABYLON.Vector3(width, 0, 0), 
-		new BABYLON.Vector3(width, 0, height), 
-		];
+		new BABYLON.Vector3(width, 0, 0),
+		new BABYLON.Vector3(width, 0, height),
+	];
+
 	//Holes in XoZ plane
 	var holes = [];
-	holes[0] = [ 
-		new BABYLON.Vector3(width/2-doorWidth/2, 0, doorHeight),
-		new BABYLON.Vector3(width/2-doorWidth/2, 0, 0),
-		new BABYLON.Vector3(width/2+doorWidth/2, 0, 0),
-		new BABYLON.Vector3(width/2+doorWidth/2, 0, doorHeight),
-		
+	holes[0] = [
+		new BABYLON.Vector3(width / 2 - doorWidth / 2, 0, doorHeight),
+		new BABYLON.Vector3(width / 2 - doorWidth / 2, 0, 0),
+		new BABYLON.Vector3(width / 2 + doorWidth / 2, 0, 0),
+		new BABYLON.Vector3(width / 2 + doorWidth / 2, 0, doorHeight),
+	];
+	holes[1] = [
+		new BABYLON.Vector3(width / 2 - doorWidth / 2, 0, doorHeight + height / 2),
+		new BABYLON.Vector3(width / 2 - doorWidth / 2, 0, height / 2),
+		new BABYLON.Vector3(width / 2 + doorWidth / 2, 0, height / 2),
+		new BABYLON.Vector3(width / 2 + doorWidth / 2, 0, doorHeight + height / 2),
+	];
+
+	var wallMaterial = new BABYLON.StandardMaterial("wallMaterial", scene);
+	wallMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/murTexture.jpg", scene);
+	wallMaterial.diffuseTexture.uScale = 6.0;
+	wallMaterial.diffuseTexture.vScale = 6.0;
+
+	var frontWall = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, holes: holes, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+	frontWall.checkCollisions = true;
+	frontWall.material = wallMaterial;
+	var backWall = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+	backWall.checkCollisions = true;
+	backWall.material = wallMaterial;
+	var rightWall = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+	rightWall.checkCollisions = true;
+	rightWall.material = wallMaterial;
+	var leftWall = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+	leftWall.checkCollisions = true;
+	leftWall.material = wallMaterial;
+
+	frontWall.rotation = new BABYLON.Vector3(-1.57, 0, 0);
+	backWall.rotation = new BABYLON.Vector3(-1.57, 0, 0);
+	rightWall.rotation = new BABYLON.Vector3(-1.57, 1.57, 0);
+	leftWall.rotation = new BABYLON.Vector3(-1.57, 1.57, 0);
+
+	backWall.position = new BABYLON.Vector3(0, 0, -width - 0.5);
+	leftWall.position = new BABYLON.Vector3(width - 0.5, 0, 0);
+
+	let groupe = new BABYLON.TransformNode("shaft");
+	frontWall.parent = groupe;
+	backWall.parent = groupe;
+	rightWall.parent = groupe;
+	leftWall.parent = groupe;
+
+	return groupe;
+}
+
+//Code reference: https://www.babylonjs-playground.com/#1OTXWR#17
+var animatedElevator = function (camera, floor, toPositionY) {
+	//Camera
+	var animCamPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var CamerakeysPosition = [];
+
+	CamerakeysPosition.push({
+		frame: 0,
+		value: camera.position
+	});
+	CamerakeysPosition.push({
+		frame: 100,
+		value: new BABYLON.Vector3(camera.position.x, camera.position.y + toPositionY, camera.position.z)
+	});
+
+	animCamPosition.setKeys(CamerakeysPosition);
+	camera.animations.push(animCamPosition);
+
+	//Floor
+	var animFloorPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var FloorkeysPosition = [];
+
+	FloorkeysPosition.push({
+		frame: 0,
+		value: floor.position
+	});
+	FloorkeysPosition.push({
+		frame: 100,
+		value: new BABYLON.Vector3(floor.position.x, floor.position.y + toPositionY, floor.position.z)
+	});
+
+	animFloorPosition.setKeys(FloorkeysPosition);
+	floor.animations.push(animFloorPosition)
+
+	scene.beginAnimation(camera, 0, 120, false, 1);
+	scene.beginAnimation(floor, 0, 120, false, 1);
+};
+
+
+
+function createWall(width, height, doorWidth, doorHeight) {
+	//Polygon shape in XoZ plane
+	var shape = [
+		new BABYLON.Vector3(0, 0, height),
+		new BABYLON.Vector3(0, 0, 0),
+		new BABYLON.Vector3(width, 0, 0),
+		new BABYLON.Vector3(width, 0, height),
+	];
+	//Holes in XoZ plane
+	var holes = [];
+	holes[0] = [
+		new BABYLON.Vector3(width / 2 - doorWidth / 2, 0, doorHeight),
+		new BABYLON.Vector3(width / 2 - doorWidth / 2, 0, 0),
+		new BABYLON.Vector3(width / 2 + doorWidth / 2, 0, 0),
+		new BABYLON.Vector3(width / 2 + doorWidth / 2, 0, doorHeight),
+
 	];
 
 	var wallMaterial = new BABYLON.StandardMaterial("wallMaterial", scene);
@@ -130,19 +232,19 @@ function createWall(width, height, doorWidth, doorHeight){
 	wallMaterial.diffuseTexture.uScale = 5.0;
 	wallMaterial.diffuseTexture.vScale = 5.0;
 
-	var polygon = BABYLON.MeshBuilder.ExtrudePolygon("polygon", {shape:shape, holes:holes, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
-	polygon.checkCollisions = true ;
-	polygon.material=wallMaterial;
-	
+	var polygon = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, holes: holes, depth: 0.2, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+	polygon.checkCollisions = true;
+	polygon.material = wallMaterial;
+
 	return polygon
 }
 
-function placeAndRotateObject(object, posx, posy , posz, rotx , roty, rotz){
-	object.position = new BABYLON.Vector3(posx,posy,posz);
-	object.rotation = new BABYLON.Vector3(rotx,roty,rotz);
+function placeAndRotateObject(object, posx, posy, posz, rotx, roty, rotz) {
+	object.position = new BABYLON.Vector3(posx, posy, posz);
+	object.rotation = new BABYLON.Vector3(rotx, roty, rotz);
 }
 
-function set_FPS_mode(scene, canvas, camera){
+function set_FPS_mode(scene, canvas, camera) {
 
 	// On click event, request pointer lock
 	scene.onPointerDown = function (evt) {
@@ -177,6 +279,7 @@ function set_FPS_mode(scene, canvas, camera){
 
 		}
 	};
+
 
 	// Attach events to the document
 	document.addEventListener("pointerlockchange", pointerlockchange, false);
