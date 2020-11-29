@@ -1,6 +1,6 @@
 function creerScene() {
 	var scn = new BABYLON.Scene(engine);
-	scn.gravity = new BABYLON.Vector3(0, -9.8, 0);
+	scn.gravity = new BABYLON.Vector3(0, -.1, 0);
 	scn.collisionsEnabled = true;
 	return scn;
 }
@@ -21,9 +21,13 @@ function creerCamera(name, options, scn) {
 	camera.keysDown = [40, 83];
 	camera.keysLeft = [81, 37];
 	camera.keysRight = [68, 39];
-	camera.attachControl(canvas);
+	camera.attachControl(canvas, true);
 	camera.inertia = 0.01;
 	camera.angularSensibility = 1000;
+	if (!camera._collider) {
+		camera._collider = new BABYLON.Collider();
+	}
+	camera._collider.radius = camera.ellipsoid;
 
 	camera.attachControl(canvas, false);
 
@@ -79,9 +83,7 @@ function creerPoster(nom, opts, scn) {
 	var mat = new BABYLON.StandardMaterial("tex-tableau-" + nom, scn);
 	mat.diffuseTexture = new BABYLON.Texture(textureName, scn);
 	tableau1.material = mat;
-
 	tableau1.checkCollisions = true;
-
 	return group;
 
 }
@@ -107,7 +109,7 @@ function creerCloison(nom, opts, scn) {
 	return groupe;
 }
 
-function createElevatorShaft() {
+function createElevatorStructure() {
 	var height = 12;
 	var width = 4;
 	var doorWidth = 2.2;
@@ -170,9 +172,9 @@ function createElevatorShaft() {
 }
 
 //Code reference: https://www.babylonjs-playground.com/#1OTXWR#17
-var animatedElevator = function (camera, floor, toPositionY) {
+var animatedElevator = function (camera, floor, toPositionY, music) {
 	//Camera
-	var animCamPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var animCamPosition = new BABYLON.Animation("animCam", "position", 15, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	var CamerakeysPosition = [];
 
 	CamerakeysPosition.push({
@@ -188,7 +190,7 @@ var animatedElevator = function (camera, floor, toPositionY) {
 	camera.animations.push(animCamPosition);
 
 	//Floor
-	var animFloorPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var animFloorPosition = new BABYLON.Animation("animCam", "position", 15, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	var FloorkeysPosition = [];
 
 	FloorkeysPosition.push({
@@ -203,9 +205,33 @@ var animatedElevator = function (camera, floor, toPositionY) {
 	animFloorPosition.setKeys(FloorkeysPosition);
 	floor.animations.push(animFloorPosition)
 
+	music.play();
 	scene.beginAnimation(camera, 0, 120, false, 1);
 	scene.beginAnimation(floor, 0, 120, false, 1);
+
 };
+
+function createStairs(height, width, d, nb, initialPoint) {
+	var initialPoint = initialPoint || BABYLON.Vector3.Zero()
+	var boxes = [];
+	var shape = [];
+	for (var j = 0; j < nb; j++) {
+		shape = [
+			new BABYLON.Vector3(initialPoint.x, initialPoint.y + j * height, initialPoint.z),
+		];
+		shape.push(new BABYLON.Vector3(initialPoint.x - width / 2, initialPoint.y + j * height, initialPoint.z + d /2 ))
+		shape.push(new BABYLON.Vector3(initialPoint.x + width / 2, initialPoint.y + j * height, initialPoint.z + d /2 ))
+		var block = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, depth: height, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+		block.rotation = new BABYLON.Vector3(0, 2 * 3.14 * j / 20, 0)
+		block.position = new BABYLON.Vector3(0, initialPoint.y + height * j, 0)
+		boxes.push(block);
+	}
+	var cone = BABYLON.MeshBuilder.CreateCylinder("bar", { diameter: 0.3, tessellation: 4, height: 11 }, scene);
+	boxes.push(cone)
+	var stair = BABYLON.Mesh.MergeMeshes(boxes, true);
+	stair.checkCollisions = true;
+	return stair;
+}
 
 
 
