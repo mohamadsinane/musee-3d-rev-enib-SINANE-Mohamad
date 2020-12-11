@@ -1,6 +1,6 @@
 function creerScene() {
 	var scn = new BABYLON.Scene(engine);
-	scn.gravity = new BABYLON.Vector3(0, -.1, 0);
+	scn.gravity = new BABYLON.Vector3(0, -0.1, 0);
 	scn.collisionsEnabled = true;
 	return scn;
 }
@@ -30,7 +30,6 @@ function creerCamera(name, options, scn) {
 	camera._collider.radius = camera.ellipsoid;
 
 	camera.attachControl(canvas, false);
-
 
 	return camera
 }
@@ -71,8 +70,8 @@ function creerSphere(nom, opts, scn) {
 function creerPoster(nom, opts, scn) {
 
 	let options = opts || {};
-	let hauteur = options["hauteur"] || 1.0;
-	let largeur = options["largeur"] || 1.0;
+	let hauteur = options["hauteur"] || 2.0;
+	let largeur = options["largeur"] || 2.0;
 	let textureName = options["tableau"] || "";
 
 	var group = new BABYLON.TransformNode("group-" + nom)
@@ -81,6 +80,7 @@ function creerPoster(nom, opts, scn) {
 	tableau1.position.y = hauteur / 2.0;
 
 	var mat = new BABYLON.StandardMaterial("tex-tableau-" + nom, scn);
+	mat.maxSimultaneousLights = 8;
 	mat.diffuseTexture = new BABYLON.Texture(textureName, scn);
 	tableau1.material = mat;
 	tableau1.checkCollisions = true;
@@ -108,6 +108,20 @@ function creerCloison(nom, opts, scn) {
 
 	return groupe;
 }
+
+function createStatue(filePath,fileName,scn,scalingVector,positionVector,yRotation){
+
+	var statue = BABYLON.SceneLoader.ImportMesh("", filePath, fileName, scn, function (newMeshes) {
+		newMeshes[0].scaling = scalingVector;
+		newMeshes[0].position = positionVector;
+		newMeshes[0].rotation.y = yRotation;
+	});
+
+	statue.checkCollisions = true;
+
+	return statue; 
+}
+
 
 function createElevatorStructure() {
 	var height = 12;
@@ -137,7 +151,7 @@ function createElevatorStructure() {
 	];
 
 	var wallMaterial = new BABYLON.StandardMaterial("wallMaterial", scene);
-	wallMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/murTexture.jpg", scene);
+	wallMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/wallTexture.jpg", scene);
 	wallMaterial.diffuseTexture.uScale = 6.0;
 	wallMaterial.diffuseTexture.vScale = 6.0;
 
@@ -174,7 +188,7 @@ function createElevatorStructure() {
 //Code reference: https://www.babylonjs-playground.com/#1OTXWR#17
 var animatedElevator = function (camera, floor, toPositionY, music) {
 	//Camera
-	var animCamPosition = new BABYLON.Animation("animCam", "position", 15, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var animCamPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	var CamerakeysPosition = [];
 
 	CamerakeysPosition.push({
@@ -190,7 +204,7 @@ var animatedElevator = function (camera, floor, toPositionY, music) {
 	camera.animations.push(animCamPosition);
 
 	//Floor
-	var animFloorPosition = new BABYLON.Animation("animCam", "position", 15, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var animFloorPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	var FloorkeysPosition = [];
 
 	FloorkeysPosition.push({
@@ -226,7 +240,7 @@ function createStairs(height, width, d, nb, initialPoint) {
 		block.position = new BABYLON.Vector3(0, initialPoint.y + height * j, 0)
 		boxes.push(block);
 	}
-	var cone = BABYLON.MeshBuilder.CreateCylinder("bar", { diameter: 0.3, tessellation: 4, height: 11 }, scene);
+	var cone = BABYLON.MeshBuilder.CreateCylinder("bar", { diameter: 0.5, tessellation: 4, height: 11 }, scene);
 	boxes.push(cone)
 	var stair = BABYLON.Mesh.MergeMeshes(boxes, true);
 	stair.checkCollisions = true;
@@ -254,11 +268,12 @@ function createWall(width, height, doorWidth, doorHeight) {
 	];
 
 	var wallMaterial = new BABYLON.StandardMaterial("wallMaterial", scene);
-	wallMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/murTexture.jpg", scene);
+	wallMaterial.maxSimultaneousLights = 6;
+	wallMaterial.diffuseTexture = new BABYLON.Texture("assets/textures/wallTexture.jpg", scene);
 	wallMaterial.diffuseTexture.uScale = 5.0;
 	wallMaterial.diffuseTexture.vScale = 5.0;
 
-	var polygon = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, holes: holes, depth: 0.2, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
+	var polygon = BABYLON.MeshBuilder.ExtrudePolygon("polygon", { shape: shape, holes: holes, depth: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE }, scene);
 	polygon.checkCollisions = true;
 	polygon.material = wallMaterial;
 
