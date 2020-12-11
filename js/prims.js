@@ -188,7 +188,7 @@ function createElevatorStructure() {
 //Code reference: https://www.babylonjs-playground.com/#1OTXWR#17
 var animatedElevator = function (camera, floor, toPositionY, music) {
 	//Camera
-	var animCamPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var animCamPosition = new BABYLON.Animation("animCam", "position", 15, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	var CamerakeysPosition = [];
 
 	CamerakeysPosition.push({
@@ -204,7 +204,7 @@ var animatedElevator = function (camera, floor, toPositionY, music) {
 	camera.animations.push(animCamPosition);
 
 	//Floor
-	var animFloorPosition = new BABYLON.Animation("animCam", "position", 10, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+	var animFloorPosition = new BABYLON.Animation("animCam", "position", 15, BABYLON.Animation.ANIMATIONTYPE_VECTOR3, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 	var FloorkeysPosition = [];
 
 	FloorkeysPosition.push({

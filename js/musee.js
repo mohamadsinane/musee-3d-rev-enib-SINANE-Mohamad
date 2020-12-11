@@ -7,7 +7,7 @@ function init() {
 	canvas = document.getElementById("renderCanvas");
 	engine = new BABYLON.Engine(canvas, true);
 	scene = creerScene();
-	music = new BABYLON.Sound("MusicElevator", "assets/audios/music_in_elevator.wav", scene, null, { loop: false, autoplay: false, length: 4, offset: 0 });
+	music = new BABYLON.Sound("MusicElevator", "assets/audios/music_in_elevator.wav", scene, null, { loop: false, autoplay: false, length: 10, offset: 0 });
 	var isLocked = false;
 	
 	scene.onPointerDown = function (evt) {
@@ -59,12 +59,12 @@ function addEventsToScene() {
 		if (camera.position.x < 16 && camera.position.x > 13 && camera.position.z < -26 && camera.position.z > -30 && ready == true) {
 			if (secondFloor == true) {
 				camera.position.z = -27.5;
-				animateElevator(camera, elevatorGround, -6, music);
+				animatedElevator(camera, elevatorGround, -6, music);
 				secondFloor = false;
 			}
 			else {
 				camera.position.z = -27.5;
-				animateElevator(camera, elevatorGround, 6, music);
+				animatedElevator(camera, elevatorGround, 6, music);
 				secondFloor = true;
 			}
 			ready = false
