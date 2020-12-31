@@ -39,6 +39,15 @@ function createLights() {
 	var leftRoom_0 =new BABYLON.PointLight("pointLight", new BABYLON.Vector3(25, 2.5, -22));
 	leftRoom_0.intensity = 0.8;
 	leftRoom_0.range = 9;
+	var leftRoom_0_2 =new BABYLON.PointLight("pointLight", new BABYLON.Vector3(22.5, 2.5, -20));
+	leftRoom_0_2.intensity =0.8;
+	leftRoom_0_2.range = 9;
+	var midRoom_0_2 =new BABYLON.PointLight("pointLight", new BABYLON.Vector3(17.5, 2.5, -20));
+	midRoom_0_2.intensity = 0.8;
+	midRoom_0_2.range = 9;
+	var rightRoom_0_2=new BABYLON.PointLight("pointLight", new BABYLON.Vector3(7.5, 2.5, -20));
+	rightRoom_0_2.intensity = 0.8;
+	rightRoom_0_2.range = 9;
 }
 
 function addEventsToScene() {
@@ -88,7 +97,14 @@ function addElevatorToScene() {
 function placePaintings() {
 	var paintingsList = [["assets/tableaux/ocean.jpg", "titre", "description", 4, 2.5, -0.1],
 	["assets/tableaux/sun.jpg", "titre", "description", 10, 2.5, -0.1],
-	["assets/tableaux/Mona_lisa.jpg", "titre", "description", 20, 2.5, -0.1]];
+	["assets/tableaux/Mona_lisa.jpg", "titre", "description", 20, 2.5, -0.1],
+	["assets/tableaux/Bird.jpg", "titre", "description", 26, 2.5, -0.1],
+	["assets/tableaux/auguste_renoir/city_dance.jpg", "titre", "description", 2, 2.5, -15.1],
+	["assets/tableaux/auguste_renoir/essoyes.jpg", "titre", "description", 8, 2.5, -15.1],
+	["assets/tableaux/piero_della_francesca/Arezzo.jfif", "titre", "description", 12, 2.5, -15.1],
+	["assets/tableaux/piero_della_francesca/Britannica.jpg", "titre", "description", 18, 2.5, -15.1],
+	["assets/tableaux/picasso/beret_brings.jpg", "titre", "description", 22, 2.5, -15.1],
+	["assets/tableaux/picasso/claude.jpg", "titre", "description", 28, 2.5, -15.1]]
 
 	paintingsList.forEach(element => {
 		var tableau = creerPoster("tableau",{tableau:element[0]},scene);
@@ -96,17 +112,17 @@ function placePaintings() {
 	});
 
 	var paintingsList_Minus90 = [
-		["assets/tableaux/monet1.jpg", "titre", "description", 0.55, 2.5, -10.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 0.55, 2.5, -5.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 0.55, 2.5, -20.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 0.55, 2.5, -25.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 10.55, 2.5, -18.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 10.55, 2.5, -21.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 10.55, 2.5, -24.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 20.55, 2.5, -20.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 20.55, 2.5, -25.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 0.55, 8.5, -18.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 0.55, 8.5, -24.1]
+		["assets/tableaux/MAN002.jpg", "titre", "description", 0.55, 2.5, -10.1],
+		["assets/tableaux/MAN001.jpg", "titre", "description", 0.55, 2.5, -5.1],
+		["assets/tableaux/auguste_renoir/the_dancer.jpg", "titre", "description", 0.55, 2.5, -20.1],
+		["assets/tableaux/auguste_renoir/woman_capeline.jpg", "titre", "description", 0.55, 2.5, -25.1],
+		["assets/tableaux/piero_della_francesca/Saint_Mary.jpg", "titre", "description", 10.55, 2.5, -18.1],
+		["assets/tableaux/piero_della_francesca/the_Resurrection.jpg", "titre", "description", 10.55, 2.5, -21.1],
+		["assets/tableaux/piero_della_francesca/The_Nativity.jpg", "titre", "description", 10.55, 2.5, -24.1],
+		["assets/tableaux/picasso/cubism_women_spanish.jpg", "titre", "description", 20.55, 2.5, -20.1],
+		["assets/tableaux/picasso/demoiselles_avignon.jpg", "titre", "description", 20.55, 2.5, -25.1],
+		["assets/tableaux/expo3.jpg", "titre", "description", 0.55, 8.5, -18.1],
+		["assets/tableaux/expo5.jpg", "titre", "description", 0.55, 8.5, -24.1]
 	];
 	paintingsList_Minus90.forEach(element => {
 		var tableau = creerPoster("tableau",{tableau:element[0]},scene);
@@ -116,16 +132,16 @@ function placePaintings() {
 
 	var paintingsList_Plus90 = [
 		["assets/tableaux/monet1.jpg", "titre", "description",  30, 2.5, -5.1],
-		["assets/tableaux/monet1.jpg", "titre", "description",  30, 2.5, -10.1],
-		["assets/tableaux/monet1.jpg", "titre", "description",10, 2.5, -20.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 10, 2.5, -25.1],
-		["assets/tableaux/monet1.jpg", "titre", "description",  20, 2.5, -18.1],
-		["assets/tableaux/monet1.jpg", "titre", "description",  20, 2.5, -21.1],
-		["assets/tableaux/monet1.jpg", "titre", "description",  20, 2.5, -24.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 30, 2.5, -20.1],
-		["assets/tableaux/monet1.jpg", "titre", "description",  30, 2.5, -25.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 30, 8.5, -18.1],
-		["assets/tableaux/monet1.jpg", "titre", "description", 30, 8.5, -24.1]
+		["assets/tableaux/tableau5.jpg", "titre", "description",  30, 2.5, -10.1],
+		["assets/tableaux/auguste_renoir/jeune_fille.jpg", "titre", "description",10, 2.5, -20.1],
+		["assets/tableaux/auguste_renoir/paysage_grasse.jpg", "titre", "description", 10, 2.5, -25.1],
+		["assets/tableaux/piero_della_francesca/Annunciation.jpg", "titre", "description",  20, 2.5, -18.1],
+		["assets/tableaux/piero_della_francesca/the_Hermitage.jfif", "titre", "description",  20, 2.5, -21.1],
+		["assets/tableaux/piero_della_francesca/Philanthropist.jpg", "titre", "description",  20, 2.5, -24.1],
+		["assets/tableaux/picasso/head_of_women.jfif", "titre", "description", 30, 2.5, -20.1],
+		["assets/tableaux/picasso/jacqueline.jpg", "titre", "description",  30, 2.5, -25.1],
+		["assets/tableaux/expo1.jpg", "titre", "description", 30, 8.5, -18.1],
+		["assets/tableaux/expo2.jpg", "titre", "description", 30, 8.5, -24.1]
 	];
 	paintingsList_Plus90.forEach(element => {
 		var tableau = creerPoster("tableau",{tableau:element[0]},scene);
@@ -135,14 +151,14 @@ function placePaintings() {
 
 
 	var  paintingsList_180 = [
-		["assets/tableaux/monet1.jpg", "titre", "description", 3, 2.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 7, 2.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 23, 2.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 27, 2.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 5, 8.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 10, 8.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 20, 8.5, -29.45],
-		["assets/tableaux/monet1.jpg", "titre", "description", 25, 8.5, -29.45]
+		["assets/tableaux/auguste_renoir/pere_fils.jpg", "titre", "description", 3, 2.5, -29.45],
+		["assets/tableaux/auguste_renoir/impressionniste.jpg", "titre", "description", 7, 2.5, -29.45],
+		["assets/tableaux/picasso/neo_expressionism.jpg", "titre", "description", 23, 2.5, -29.45],
+		["assets/tableaux/picasso/swiss_farmer.jfif", "titre", "description", 27, 2.5, -29.45],
+		["assets/tableaux/monnet2.jpg", "titre", "description", 5, 8.5, -29.45],
+		["assets/tableaux/monnet3.jpg", "titre", "description", 10, 8.5, -29.45],
+		["assets/tableaux/monnet4.jpg", "titre", "description", 20, 8.5, -29.45],
+		["assets/tableaux/tableau1.jpg", "titre", "description", 25, 8.5, -29.45]
 	];
 	
 	paintingsList_180.forEach(element => {
@@ -151,13 +167,28 @@ function placePaintings() {
 		tableau.rotation = new BABYLON.Vector3(0,3.14,0)
 	});
 
+
+	var pancartes = [
+		["assets/tableaux/auguste_renoir/auguste_renoir.jpg", "titre", "description", 7, 2.5, -14.45],
+		["assets/tableaux/piero_della_francesca/piero_pancarte.jpg", "titre", "description", 17, 2.5, -14.45],
+		["assets/tableaux/elevator.gif", "titre", "description", 13, 2.5, -14.45],
+		["assets/tableaux/elevator.gif", "titre", "description", 15, 3.5, -25.3],
+		["assets/tableaux/picasso/picasso_pancarte.jfif", "titre", "description", 27, 2.5, -14.45]
+	];
+	pancartes.forEach(element => {
+		var pancarte = creerPancarte("pancarte",{pancarte:element[0]},scene);
+		pancarte.position = new BABYLON.Vector3(element[3], element[4], element[5])
+		pancarte.rotation = new BABYLON.Vector3(0,3.14,0)
+	});
+
+	// button1 = showDescription("hello",scene,new BABYLON.Vector3(.025, .025, .025),new BABYLON.Vector3(16.9, 20,20), 3.14)
 }
 
 function addStatuesToScene()
 {
 	var scaling = new BABYLON.Vector3(.025, .025, .025);
-	createStatue("assets/statues/", "statue1.stl", scene, scaling,new BABYLON.Vector3(16.9, .1, -13.7), 3.14);
-	createStatue("assets/statues/", "statue1.stl", scene, scaling,new BABYLON.Vector3(14, .1, -13.7), 3.14);
+	createStatue("assets/statues/", "statue1.stl", scene, scaling,new BABYLON.Vector3(18.9, .1, -13.7), 3.14);
+	createStatue("assets/statues/", "statue1.stl", scene, scaling,new BABYLON.Vector3(12, .1, -13.7), 3.14);
 	createStatue("assets/statues/", "statue2.stl", scene, scaling, new BABYLON.Vector3(14.5, .1, -7.5), 1.57);
 }
 

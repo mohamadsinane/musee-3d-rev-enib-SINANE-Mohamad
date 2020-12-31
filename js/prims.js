@@ -225,6 +225,52 @@ var animatedElevator = function (camera, floor, toPositionY, music) {
 
 };
 
+function creerPancarte(nom,opts,scn){
+
+	let options = opts || {} ; 
+	let hauteur = options["hauteur"] || 1.0 ; 
+	let largeur = options["largeur"] || 1.0 ; 	
+	let textureName = options["pancarte"] || ""; 
+
+	var group = new BABYLON.TransformNode("group-"+nom)
+	var pancarte = BABYLON.MeshBuilder.CreatePlane("pancarte-" + nom, {width:largeur,height:hauteur}, scn);
+	pancarte.parent = group ; 
+	pancarte.position.y = hauteur/2.0 ; 
+
+	var mat = new BABYLON.StandardMaterial("tex-tableau-" + nom, scn);
+	mat.diffuseTexture = new BABYLON.Texture(textureName, scn);
+	pancarte.material = mat;
+
+	pancarte.checkCollisions = true;
+
+	return group ; 
+
+}
+
+
+// function showDescription(description,scene,scalingVector,positionVector,yRotation){
+// 	var plane = BABYLON.Mesh.CreatePlane("plane", 2);
+	
+// 	var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+
+// 	var button = BABYLON.GUI.Button.CreateSimpleButton("showDesc", "Show description");
+// 	button.scene= scene;
+// 	button.scaling=scalingVector;
+// 	button.position = positionVector;
+// 	button.rotation=yRotation;
+//     button.width = 0.6;
+//     button.height = 0.2;
+//     button.color = "white";
+//     button.fontSize = 60;
+//     button.background = "grey";
+//     button.onPointerUpObservable.add(function() {
+//         alert(description);
+//     });
+// 	advancedTexture.addControl(button);
+	
+// 	return advancedTexture;
+// }
+
 function createStairs(height, width, d, nb, initialPoint) {
 	var initialPoint = initialPoint || BABYLON.Vector3.Zero()
 	var boxes = [];
