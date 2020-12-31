@@ -42,4 +42,4 @@ Il est composé de 4 salles, la salle principale et 3 petites salles chacune pou
 
 
 
-# Excusez-moi pour ce retard car j'ai penser que j'ai merger la derniere version de l'application le 17/12/2020 , mais c'etait en attente sur le git et j'ai vu ca aujourd'hui 
+# Excusez-moi pour ce retard car j'ai pensé que j'ai merger la dernière version de l'application le 17/12/2020, mais c'était en attente sur le git et j'ai vu ça aujourd'hui
