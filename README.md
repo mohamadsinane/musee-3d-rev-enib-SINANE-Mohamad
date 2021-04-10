@@ -39,7 +39,3 @@ Il est composé de 4 salles, la salle principale et 3 petites salles chacune pou
 # Deuxieme étage
 
 ### Salle principale : Contient un banque, 8 tableaux et un ascenseur
-
-
-
-# Excusez-moi pour ce retard car j'ai pensé que j'ai merger la dernière version de l'application le 17/12/2020, mais c'était en attente sur le git et j'ai vu ça aujourd'hui
